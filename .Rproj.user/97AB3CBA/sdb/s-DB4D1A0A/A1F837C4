@@ -1,0 +1,16 @@
+{
+    "contents" : "## Download and unzip. Then remove zip.\nfileUrl<-\"https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip\"\n\ndownload.file(fileUrl,destfile=\"consData.zip\",method=\"curl\")\n\nunzip(\"consData.zip\", files = NULL, list = FALSE, overwrite = TRUE,\n      junkpaths = FALSE, exdir = \".\", unzip = \"internal\",\n      setTimes = FALSE)\n\n## Remove intermediate files\nunlink(\"consData.zip\")\nrm(fileUrl)",
+    "created" : 1402156439025.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1447141244",
+    "id" : "A1F837C4",
+    "lastKnownWriteTime" : 1402171695,
+    "path" : "~/ExData_Plotting1/ExData_Plotting1.R",
+    "project_path" : "ExData_Plotting1.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

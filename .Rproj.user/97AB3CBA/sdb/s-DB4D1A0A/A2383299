@@ -1,0 +1,17 @@
+{
+    "contents" : "## Read data into R\nhhConsump<-read.table(\"household_power_consumption.txt\",\n                      sep=\";\",\n                      header=TRUE,\n                      colClasses=\"character\",\n                      na.strings=\"NA\",nrows=170000)\n\n## Create merged DateTime column\nhhConsump$DateTime<-strptime(paste(hhConsump$Date,hhConsump$Time),\n                             \"%d/%m/%Y %H:%M:%S\")\n\n## Subset table on date\nhhConsump$Date<-as.Date(hhConsump$Date,\"%d/%m/%Y\")\nhhConsump<-hhConsump[hhConsump$Date>=\"2007-02-01\",]\nhhConsump<-hhConsump[hhConsump$Date<=\"2007-02-02\",]\n\n## Convert select columns to class numeric\nhhConsump$Global_active_power<-as.numeric(hhConsump$Global_active_power)\n\n## Plots a histogram of global active power usage\npng(file=\"plot1.png\")\nwith(hhConsump,hist(Global_active_power,col=\"red\",main=\"Global Active Power\",\n                    xlab=\"Global Active Power (kilowatts)\"))\ndev.off()",
+    "created" : 1402156558061.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "53171576",
+    "id" : "A2383299",
+    "lastKnownWriteTime" : 1402172292,
+    "path" : "~/ExData_Plotting1/plot1.R",
+    "project_path" : "plot1.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

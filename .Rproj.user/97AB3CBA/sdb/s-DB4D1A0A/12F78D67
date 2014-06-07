@@ -1,0 +1,17 @@
+{
+    "contents" : "## Read data into R\nhhConsump<-read.table(\"household_power_consumption.txt\",\n                      sep=\";\",\n                      header=TRUE,\n                      colClasses=\"character\",\n                      na.strings=\"NA\",nrows=170000)\n\n## Create merged DateTime column\nhhConsump$DateTime<-strptime(paste(hhConsump$Date,hhConsump$Time),\n                             \"%d/%m/%Y %H:%M:%S\")\n\n## Subset table on date\nhhConsump$Date<-as.Date(hhConsump$Date,\"%d/%m/%Y\")\nhhConsump<-hhConsump[hhConsump$Date>=\"2007-02-01\",]\nhhConsump<-hhConsump[hhConsump$Date<=\"2007-02-02\",]\n\n## Convert select columns to class numeric\nhhConsump$Global_active_power<-as.numeric(hhConsump$Global_active_power)\nhhConsump$Global_reactive_power<-as.numeric(hhConsump$Global_reactive_power)\nhhConsump$Voltage<-as.numeric(hhConsump$Voltage)\nhhConsump$Global_intensity<-as.numeric(hhConsump$Global_intensity)\nhhConsump$Sub_metering_1<-as.numeric(hhConsump$Sub_metering_1)\nhhConsump$Sub_metering_2<-as.numeric(hhConsump$Sub_metering_2)\nhhConsump$Sub_metering_3<-as.numeric(hhConsump$Sub_metering_3)\n\n## Plots four time series graphics including active power usage,\n## sub metering, voltage and reactive power usage.\npng(file=\"plot4.png\")\n\npar(mfcol=c(2,2))\n\n## Plots global active power usage time series graphic\nwith(hhConsump,plot(DateTime,Global_active_power,type=\"l\",\n                    xlab=\"\",ylab=\"Global Active Power\"))\n\n## Plots 3-layer sub metering time series graphic\nwith(hhConsump,plot(DateTime,Sub_metering_1,\n                    ylab=\"Energy sub metering\",\n                    xlab=\"\",\n                    type=\"n\"))\nwith(subset(hhConsump,Sub_metering_1>=0),\n     points(DateTime,Sub_metering_1,col=\"black\",type=\"l\"))\nwith(subset(hhConsump,Sub_metering_2>=0),\n     points(DateTime,Sub_metering_2,col=\"red\",type=\"l\"))\nwith(subset(hhConsump,Sub_metering_3>=0),\n     points(DateTime,Sub_metering_3,col=\"blue\",type=\"l\"))\nlegend(\"topright\",lwd=1,col=c(\"black\",\"red\",\"blue\"),\n       legend=c(\"Sub_metering_1\",\n                \"Sub_metering_2\",\n                \"Sub_metering_3\"))\n\n## Plots voltage time series graphic\nwith(hhConsump,plot(DateTime,Voltage,\n                    xlab=\"datetime\",\n                    type=\"l\"))\n\n## Plots global reactive power time series graphic\nwith(hhConsump,plot(DateTime,Global_reactive_power,\n                    xlab=\"datetime\",\n                    type=\"l\"))\n\ndev.off()\n\n## Remove intermediate files\nunlink(\"household_power_consumption.txt\")",
+    "created" : 1402168299414.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2981536693",
+    "id" : "12F78D67",
+    "lastKnownWriteTime" : 1402172274,
+    "path" : "~/ExData_Plotting1/plot4.R",
+    "project_path" : "plot4.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

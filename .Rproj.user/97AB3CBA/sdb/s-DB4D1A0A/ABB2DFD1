@@ -1,0 +1,17 @@
+{
+    "contents" : "## Read data into R\nhhConsump<-read.table(\"household_power_consumption.txt\",\n                      sep=\";\",\n                      header=TRUE,\n                      colClasses=\"character\",\n                      na.strings=\"NA\",nrows=170000)\n\n## Create merged DateTime column\nhhConsump$DateTime<-strptime(paste(hhConsump$Date,hhConsump$Time),\n                             \"%d/%m/%Y %H:%M:%S\")\n\n## Subset table on date\nhhConsump$Date<-as.Date(hhConsump$Date,\"%d/%m/%Y\")\nhhConsump<-hhConsump[hhConsump$Date>=\"2007-02-01\",]\nhhConsump<-hhConsump[hhConsump$Date<=\"2007-02-02\",]\n\n## Convert select columns to class numeric\nhhConsump$Sub_metering_1<-as.numeric(hhConsump$Sub_metering_1)\nhhConsump$Sub_metering_2<-as.numeric(hhConsump$Sub_metering_2)\nhhConsump$Sub_metering_3<-as.numeric(hhConsump$Sub_metering_3)\n\n## Plots 3-layer sub metering time series graphic\npng(file=\"plot3.png\")\nwith(hhConsump,plot(DateTime,Sub_metering_1,\n                    ylab=\"Energy sub metering\",\n                    xlab=\"\",\n                    type=\"n\"))\nwith(subset(hhConsump,Sub_metering_1>=0),\n     points(DateTime,Sub_metering_1,col=\"black\",type=\"l\"))\nwith(subset(hhConsump,Sub_metering_2>=0),\n     points(DateTime,Sub_metering_2,col=\"red\",type=\"l\"))\nwith(subset(hhConsump,Sub_metering_3>=0),\n     points(DateTime,Sub_metering_3,col=\"blue\",type=\"l\"))\nlegend(\"topright\",lwd=1,col=c(\"black\",\"red\",\"blue\"),\n                              legend=c(\"Sub_metering_1\",\n                                       \"Sub_metering_2\",\n                                       \"Sub_metering_3\"))\ndev.off()",
+    "created" : 1402166591154.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3939989277",
+    "id" : "ABB2DFD1",
+    "lastKnownWriteTime" : 1402172280,
+    "path" : "~/ExData_Plotting1/plot3.R",
+    "project_path" : "plot3.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
